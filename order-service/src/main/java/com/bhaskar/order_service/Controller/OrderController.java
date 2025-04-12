@@ -22,16 +22,13 @@ public class OrderController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    @CircuitBreaker(name = "inventory", fallbackMethod = "fallbackMethod")  //implementing circuit breaker for fallback login in case of failure
-    @TimeLimiter(name="inventory")
-    @Retry(name = "inventory")
-    public CompletableFuture<String> placeOrder(@RequestBody OrderRequest orderRequest) {
+    public String placeOrder(@RequestBody OrderRequest orderRequest) {
 
         //before implementing time limiter
         //        orderService.placeOrder(orderRequest);
         //        return "Order Placed Successfully";
 
-        return CompletableFuture.supplyAsync(()-> orderService.placeOrder(orderRequest));
+        return orderService.placeOrder(orderRequest);
 
     }
 
